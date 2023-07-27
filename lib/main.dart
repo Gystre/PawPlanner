@@ -37,11 +37,14 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   List<Pet> _pets = [
-    Pet(name: "bruh", species: "dog", age: 1, weight: 1.0),
-    Pet(name: "ez", species: "cat", age: 2, weight: 2.0)
+    Pet(
+        name: "bruh",
+        species: "dog",
+        breed: "ballerman69",
+        age: 1,
+        weight: 1.0),
+    Pet(name: "ez", species: "cat", breed: "bruhmobile123", age: 2, weight: 2.0)
   ];
-
-  final List<Widget> _pages = [TasksPage(), PetsPage()];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -57,7 +60,15 @@ class _MyHomePageState extends State<MyHomePage> {
         useMaterial3: true,
       ),
       home: Scaffold(
-        body: _pages[_selectedIndex],
+        // body: _pages[_selectedIndex],
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: [
+            TasksPage(),
+            PetsPage(pets: _pets),
+          ],
+        ),
+
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -97,7 +108,10 @@ class _MyHomePageState extends State<MyHomePage> {
               return;
             }
 
-            print('New pet added: ${newPet.name}');
+            setState(() {
+              _pets.add(newPet);
+            });
+            print("set the state");
           });
         },
         child: const Icon(Icons.add),

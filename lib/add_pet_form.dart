@@ -8,7 +8,7 @@ class AddPetForm extends StatefulWidget {
 
 class _AddPetFormState extends State<AddPetForm> {
   final _formKey = GlobalKey<FormState>();
-  final Pet _newPet = Pet(name: '', species: '', age: 0, weight: 0);
+  final Pet _newPet = Pet(name: '', species: '', breed: '', age: 0, weight: 0);
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
@@ -45,6 +45,16 @@ class _AddPetFormState extends State<AddPetForm> {
                   return null;
                 },
                 onChanged: (value) => _newPet.species = value,
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Breed'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a breed';
+                  }
+                  return null;
+                },
+                onChanged: (value) => _newPet.breed = value,
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Age'),

@@ -3,6 +3,7 @@ import "task.dart";
 class Pet {
   String name;
   String species;
+  String breed; // ex. siamese cat
   int age;
   double weight;
   String? dietaryRestrictions;
@@ -16,6 +17,7 @@ class Pet {
     required this.species,
     required this.age,
     required this.weight,
+    required this.breed,
     this.dietaryRestrictions,
     this.medication,
   });
