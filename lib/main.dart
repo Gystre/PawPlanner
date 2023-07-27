@@ -52,6 +52,18 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _addPet(Pet pet) {
+    setState(() {
+      _pets.add(pet);
+    });
+  }
+
+  void _deletePet(int index) {
+    setState(() {
+      _pets.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -65,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
           index: _selectedIndex,
           children: [
             TasksPage(),
-            PetsPage(pets: _pets),
+            PetsPage(pets: _pets, addPet: _addPet, deletePet: _deletePet),
           ],
         ),
 
@@ -111,7 +123,6 @@ class _MyHomePageState extends State<MyHomePage> {
             setState(() {
               _pets.add(newPet);
             });
-            print("set the state");
           });
         },
         child: const Icon(Icons.add),
