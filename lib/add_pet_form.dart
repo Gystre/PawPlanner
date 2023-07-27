@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'pet.dart';
 
 class AddPetForm extends StatefulWidget {
+  const AddPetForm({super.key});
+
   @override
   _AddPetFormState createState() => _AddPetFormState();
 }
@@ -19,7 +21,10 @@ class _AddPetFormState extends State<AddPetForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Add Pet')),
+      appBar: AppBar(
+        title: const Text('Add Pet'),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -27,7 +32,7 @@ class _AddPetFormState extends State<AddPetForm> {
           child: ListView(
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: 'Name'),
+                decoration: const InputDecoration(labelText: 'Name'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a name';
@@ -37,7 +42,7 @@ class _AddPetFormState extends State<AddPetForm> {
                 onChanged: (value) => _newPet.name = value,
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Species'),
+                decoration: const InputDecoration(labelText: 'Species'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a species';

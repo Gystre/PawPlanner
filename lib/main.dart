@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import "package:paw_planner/add_pet_form.dart";
+import "package:paw_planner/add_task_form.dart";
 import "package:paw_planner/pet.dart";
-import "pets_page.dart";
-import "tasks_page.dart";
-import 'add_pet_form.dart';
+import "package:paw_planner/pets_page.dart";
+import "package:paw_planner/task.dart";
+import "package:paw_planner/tasks_page.dart";
 
 void main() {
   runApp(const MyApp());
@@ -64,6 +66,18 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _deleteTask(int petIdx, int taskIdx) {
+    setState(() {
+      _pets[petIdx].tasks.removeAt(taskIdx);
+    });
+  }
+
+  void _addTask(int petIdx, Task task) {
+    setState(() {
+      _pets[petIdx].tasks.add(task);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -76,7 +90,11 @@ class _MyHomePageState extends State<MyHomePage> {
         body: IndexedStack(
           index: _selectedIndex,
           children: [
-            TasksPage(),
+            TasksPage(
+              pets: _pets,
+              deleteTask: _deleteTask,
+              addTask: _addTask,
+            ),
             PetsPage(pets: _pets, addPet: _addPet, deletePet: _deletePet),
           ],
         ),
@@ -104,8 +122,25 @@ class _MyHomePageState extends State<MyHomePage> {
     if (_selectedIndex == 0) {
       return FloatingActionButton(
         onPressed: () {
-          // Do something specific for the "Tasks" page when the add button is pressed.
-          print('Add task button pressed');
+          Navigator.push(
+            context,
+            MaterialPageRoute<Task>(
+              builder: (context) => AddTaskForm(pets: _pets),
+            ),
+          ).then((newTask) {
+            if (newTask == null) {
+              return;
+            }
+
+            print(newTask.petIds);
+
+            // iterate through all the pet ids and add the tasks to them
+            setState(() {
+              for (int petId in newTask.petIds) {
+                _pets[petId].tasks.add(newTask);
+              }
+            });
+          });
         },
         child: const Icon(Icons.add),
       );
@@ -114,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute<Pet>(builder: (context) => AddPetForm()),
+            MaterialPageRoute<Pet>(builder: (context) => const AddPetForm()),
           ).then((newPet) {
             if (newPet == null) {
               return;

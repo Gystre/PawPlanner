@@ -10,7 +10,14 @@ class Pet {
   String? medication;
 
   // the tasks associated with this pet
-  List<Task> tasks = [];
+  List<Task> tasks = [
+    Task(
+      name: "Eat",
+      frequency: TaskFrequency.daily,
+      description: "Eat the dog",
+      dueDate: DateTime.now(),
+    )
+  ];
 
   Pet({
     required this.name,
