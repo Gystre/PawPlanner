@@ -38,13 +38,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
-  List<Pet> _pets = [
+  final List<Pet> _pets = [
     Pet(
-        name: "bruh",
-        species: "dog",
-        breed: "ballerman69",
-        age: 1,
-        weight: 1.0),
+        name: "Eve",
+        species: "Dog",
+        breed: "Anime girl",
+        age: 999,
+        weight: 999),
     Pet(name: "ez", species: "cat", breed: "bruhmobile123", age: 2, weight: 2.0)
   ];
 
@@ -86,7 +86,6 @@ class _MyHomePageState extends State<MyHomePage> {
         useMaterial3: true,
       ),
       home: Scaffold(
-        // body: _pages[_selectedIndex],
         body: IndexedStack(
           index: _selectedIndex,
           children: [
@@ -98,7 +97,6 @@ class _MyHomePageState extends State<MyHomePage> {
             PetsPage(pets: _pets, addPet: _addPet, deletePet: _deletePet),
           ],
         ),
-
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -131,8 +129,6 @@ class _MyHomePageState extends State<MyHomePage> {
             if (newTask == null) {
               return;
             }
-
-            print(newTask.petIds);
 
             // iterate through all the pet ids and add the tasks to them
             setState(() {

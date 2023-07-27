@@ -20,51 +20,59 @@ class PetsPage extends StatelessWidget {
         title: const Text('Pets'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: ListView.builder(
-        itemCount: pets.length,
-        itemBuilder: (context, index) {
-          final pet = pets[index];
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.builder(
+          itemCount: pets.length,
+          itemBuilder: (context, index) {
+            final pet = pets[index];
 
-          return Dismissible(
-            key: UniqueKey(),
-            direction: DismissDirection.endToStart,
-            onDismissed: (direction) {
-              // figure out how to delete pet
-              deletePet(index);
-
-              // show snackbar to undo it
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text("${pet.name} deleted"),
-                  action: SnackBarAction(
-                    label: 'Undo',
-                    onPressed: () {
-                      // Add the card back to the list if the user undoes the deletion
-                      addPet(pet);
-                    },
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PetProfilePage(pet: pet),
                   ),
-                ),
-              );
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PetProfilePage(pet: pet),
+                );
+              },
+              child: Dismissible(
+                key: UniqueKey(),
+                direction: DismissDirection.endToStart,
+                onDismissed: (direction) {
+                  deletePet(index);
+
+                  // show snackbar to undo it
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("${pet.name} deleted"),
+                      action: SnackBarAction(
+                        label: 'Undo',
+                        onPressed: () {
+                          // Add the card back to the list if the user undoes the deletion
+                          addPet(pet);
+                        },
+                      ),
                     ),
                   );
                 },
-                child: Card(
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  margin: const EdgeInsets.only(bottom: 8.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.grey[200],
+                  ),
                   child: Row(
                     children: [
                       // placeholder image
-                      Container(
-                        width: 100,
-                        height: 100,
-                        color: Colors.grey,
+                      Hero(
+                        tag: pet.name,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.asset("assets/eve.png",
+                              width: 96, height: 96),
+                        ),
                       ),
 
                       // pet info
@@ -76,32 +84,31 @@ class PetsPage extends StatelessWidget {
                             children: [
                               Text(
                                 pet.name,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.red,
-                                  fontSize: 16,
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 24,
                                 ),
                               ),
-                              const SizedBox(height: 2),
                               Text(
                                 pet.breed,
                                 style: const TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   color: Colors.grey,
-                                  fontStyle: FontStyle.italic,
                                 ),
                               ),
                             ],
                           ),
                         ),
                       ),
+                      const Icon(Icons.arrow_forward_ios),
                     ],
                   ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

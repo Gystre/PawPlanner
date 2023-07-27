@@ -33,13 +33,23 @@ class TasksPage extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  pet.name,
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child:
+                          Image.asset("assets/eve.png", width: 64, height: 64),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      pet.name,
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 8),
                 Column(
@@ -70,25 +80,39 @@ class TasksPage extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          color: Colors.grey,
+                          color: Colors.grey[200],
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Row(
                           children: [
-                            Text(
-                              task.name,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  task.name,
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Text(
+                                  "Time: ${format.format(task.dueDate)}",
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                Text(
+                                  "Frequency: ${task.frequency.name}",
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                )
+                              ],
                             ),
-                            Text(
-                              "Time: ${format.format(task.dueDate)}",
-                            ),
-                            Text(
-                              "Frequency: ${task.frequency.name}",
-                            )
+
+                            // make the arrow appear on the right most side
+                            Expanded(child: Container()),
+                            const Icon(Icons.arrow_forward_ios),
                           ],
                         ),
                       ),

@@ -26,6 +26,15 @@ class _AddTaskFormState extends State<AddTaskForm> {
   final _dateController = TextEditingController();
 
   void _submitForm() {
+    if (_petIds.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please select at least one pet'),
+        ),
+      );
+      return;
+    }
+
     if (_formKey.currentState!.validate()) {
       _newTask.petIds = _petIds;
       Navigator.pop(context, _newTask);
@@ -96,9 +105,6 @@ class _AddTaskFormState extends State<AddTaskForm> {
                   }
                 },
                 validator: (value) {
-                  if (_newTask.dueDate == null) {
-                    return 'Please enter a due date';
-                  }
                   return null;
                 },
               ),

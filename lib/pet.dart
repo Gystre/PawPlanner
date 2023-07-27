@@ -12,9 +12,9 @@ class Pet {
   // the tasks associated with this pet
   List<Task> tasks = [
     Task(
-      name: "Eat",
+      name: "Eat the dog",
       frequency: TaskFrequency.daily,
-      description: "Eat the dog",
+      description: "Consume while fresh",
       dueDate: DateTime.now(),
     )
   ];
