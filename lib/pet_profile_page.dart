@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:paw_planner/edit_pet_form.dart';
 import 'pet.dart';
 
 class PetProfilePage extends StatelessWidget {
   final Pet pet;
+  final Function(Pet pet) setPet;
 
-  const PetProfilePage({Key? key, required this.pet}) : super(key: key);
+  const PetProfilePage({Key? key, required this.pet, required this.setPet})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +15,28 @@ class PetProfilePage extends StatelessWidget {
       appBar: AppBar(
         title: Text("${pet.name}'s Profile"),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditPetForm(
+                    pet: pet,
+                  ),
+                ),
+              ).then((newPet) {
+                if (newPet == null) {
+                  return;
+                }
+
+                // edit the pet with the new info
+                setPet(pet);
+              });
+            },
+          ),
+        ],
       ),
       body: Container(
         padding: const EdgeInsets.all(8.0),

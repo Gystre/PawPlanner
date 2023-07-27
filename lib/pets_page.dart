@@ -6,11 +6,13 @@ class PetsPage extends StatelessWidget {
   final List<Pet> pets;
   final Function(Pet pet) addPet;
   final Function(int index) deletePet;
+  final Function(Pet pet) setPet;
   const PetsPage({
     super.key,
     required this.pets,
     required this.addPet,
     required this.deletePet,
+    required this.setPet,
   });
 
   @override
@@ -32,7 +34,8 @@ class PetsPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PetProfilePage(pet: pet),
+                    builder: (context) =>
+                        PetProfilePage(pet: pet, setPet: setPet),
                   ),
                 );
               },

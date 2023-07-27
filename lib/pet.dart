@@ -1,6 +1,9 @@
 import "task.dart";
 
 class Pet {
+  // this is for the edit functions so that I can just pass in the object and the object will know where it is in the pets list
+  int idx;
+
   String name;
   String species;
   String breed; // ex. siamese cat
@@ -20,6 +23,7 @@ class Pet {
   ];
 
   Pet({
+    required this.idx,
     required this.name,
     required this.species,
     required this.age,

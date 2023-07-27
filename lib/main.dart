@@ -40,12 +40,21 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   final List<Pet> _pets = [
     Pet(
-        name: "Eve",
-        species: "Dog",
-        breed: "Anime girl",
-        age: 999,
-        weight: 999),
-    Pet(name: "ez", species: "cat", breed: "bruhmobile123", age: 2, weight: 2.0)
+      idx: 0,
+      name: "Eve",
+      species: "Dog",
+      breed: "Anime girl",
+      age: 999,
+      weight: 999,
+    ),
+    Pet(
+      idx: 1,
+      name: "ez",
+      species: "cat",
+      breed: "bruhmobile123",
+      age: 2,
+      weight: 2.0,
+    )
   ];
 
   void _onItemTapped(int index) {
@@ -57,6 +66,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void _addPet(Pet pet) {
     setState(() {
       _pets.add(pet);
+    });
+  }
+
+  void _setPet(Pet pet) {
+    setState(() {
+      _pets[pet.idx] = pet;
     });
   }
 
@@ -94,7 +109,12 @@ class _MyHomePageState extends State<MyHomePage> {
               deleteTask: _deleteTask,
               addTask: _addTask,
             ),
-            PetsPage(pets: _pets, addPet: _addPet, deletePet: _deletePet),
+            PetsPage(
+              pets: _pets,
+              addPet: _addPet,
+              deletePet: _deletePet,
+              setPet: _setPet,
+            ),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
@@ -145,7 +165,11 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute<Pet>(builder: (context) => const AddPetForm()),
+            MaterialPageRoute<Pet>(
+              builder: (context) => AddPetForm(
+                nextIdx: _pets.length,
+              ),
+            ),
           ).then((newPet) {
             if (newPet == null) {
               return;
