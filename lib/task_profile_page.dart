@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:paw_planner/edit_task_form.dart';
+import 'package:paw_planner/pet.dart';
 import 'package:paw_planner/task.dart';
 
 class TaskProfilePage extends StatelessWidget {
-  final int taskIdx;
-  final String petName;
+  final Pet pet;
   final Task task;
-  const TaskProfilePage(
-      {super.key,
-      required this.task,
-      required this.taskIdx,
-      required this.petName});
+  final Function(int petIdx, Task task) setTask;
+  const TaskProfilePage({
+    super.key,
+    required this.task,
+    required this.pet,
+    required this.setTask,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class TaskProfilePage extends StatelessWidget {
                 }
 
                 // set the task
-                // setPet(pet);
+                setTask(pet.idx, newTask);
               });
             },
           ),
@@ -47,12 +49,15 @@ class TaskProfilePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Hero(
-              tag: "$petName ${task.petId} $taskIdx",
-              child: Text(
-                task.name,
-                style: const TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
+              tag: "${pet.name} ${pet.idx} ${task.idx}",
+              child: Material(
+                color: Colors.transparent,
+                child: Text(
+                  task.name,
+                  style: const TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),

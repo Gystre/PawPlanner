@@ -15,7 +15,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
   final _formKey = GlobalKey<FormState>();
 
   final Task _newTask = Task(
-    petId: 0,
+    idx: 0,
     name: '',
     description: '',
     dueDate: DateTime.now(),
@@ -37,6 +37,11 @@ class _AddTaskFormState extends State<AddTaskForm> {
     }
 
     if (_formKey.currentState!.validate()) {
+      // set the task index to the next available index in each pet
+      for (final pet in widget.pets) {
+        _newTask.idx = pet.tasks.length;
+      }
+
       // pop the data as a map
       Navigator.pop(context, {
         'task': _newTask,

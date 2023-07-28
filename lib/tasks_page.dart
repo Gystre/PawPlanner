@@ -8,11 +8,13 @@ class TasksPage extends StatelessWidget {
   final List<Pet> pets;
   final Function(int petIdx, int taskIdx) deleteTask;
   final Function(int petIdx, Task task) addTask;
+  final Function(int petIdx, Task task) setTask;
   TasksPage({
     super.key,
     required this.pets,
     required this.deleteTask,
     required this.addTask,
+    required this.setTask,
   });
 
   final format = DateFormat('h:mm a');
@@ -45,14 +47,14 @@ class TasksPage extends StatelessWidget {
                     Text(
                       pet.name,
                       style: TextStyle(
-                        fontSize: 40,
+                        fontSize: 48,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 4),
                 Column(
                   children: pet.tasks.asMap().entries.map((entry) {
                     final j = entry.key;
@@ -67,8 +69,8 @@ class TasksPage extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (context) => TaskProfilePage(
                                 task: task,
-                                taskIdx: j,
-                                petName: pet.name,
+                                pet: pet,
+                                setTask: setTask,
                               ),
                             ),
                           );
@@ -105,13 +107,15 @@ class TasksPage extends StatelessWidget {
                                   children: [
                                     Hero(
                                       tag:
-                                          "${pet.name} ${task.petId} $j", // requires pet's name, pet's id, and task's index to be truly unique
-                                      child: Text(
-                                        task.name,
-                                        style: const TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
+                                          "${pet.name} ${task.idx} $j", // requires pet's name, pet's id, and task's index to be truly unique
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        child: Text(
+                                          task.name,
+                                          style: const TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -141,7 +145,7 @@ class TasksPage extends StatelessWidget {
                     );
                   }).toList(),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 24),
               ],
             );
           },

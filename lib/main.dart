@@ -93,6 +93,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _setTask(int petIdx, Task task) {
+    setState(() {
+      _pets[petIdx].tasks[task.idx] = task;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -108,6 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
               pets: _pets,
               deleteTask: _deleteTask,
               addTask: _addTask,
+              setTask: _setTask,
             ),
             PetsPage(
               pets: _pets,
