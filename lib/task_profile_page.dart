@@ -3,8 +3,14 @@ import 'package:paw_planner/edit_task_form.dart';
 import 'package:paw_planner/task.dart';
 
 class TaskProfilePage extends StatelessWidget {
+  final int taskIdx;
+  final String petName;
   final Task task;
-  const TaskProfilePage({super.key, required this.task});
+  const TaskProfilePage(
+      {super.key,
+      required this.task,
+      required this.taskIdx,
+      required this.petName});
 
   @override
   Widget build(BuildContext context) {
@@ -40,16 +46,16 @@ class TaskProfilePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Hero(
-            //   tag: task.name,
-            //   child: Text(
-            //     task.name + task.petId.toString(),
-            //     style: const TextStyle(
-            //       fontSize: 40,
-            //       fontWeight: FontWeight.bold,
-            //     ),
-            //   ),
-            // ),
+            Hero(
+              tag: "$petName ${task.petId} $taskIdx",
+              child: Text(
+                task.name,
+                style: const TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
 
             const SizedBox(height: 8),
 

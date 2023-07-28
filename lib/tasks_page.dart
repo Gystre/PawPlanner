@@ -65,7 +65,11 @@ class TasksPage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => TaskProfilePage(task: task),
+                              builder: (context) => TaskProfilePage(
+                                task: task,
+                                taskIdx: j,
+                                petName: pet.name,
+                              ),
                             ),
                           );
                         },
@@ -99,17 +103,18 @@ class TasksPage extends StatelessWidget {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    // Hero(
-                                    //   tag: task.name + task.petId.toString(),
-                                    //   child: Text(
-                                    //     task.name,
-                                    //     style: const TextStyle(
-                                    //       fontSize: 24,
-                                    //       fontWeight: FontWeight.bold,
-                                    //       color: Colors.black,
-                                    //     ),
-                                    //   ),
-                                    // ),
+                                    Hero(
+                                      tag:
+                                          "${pet.name} ${task.petId} $j", // requires pet's name, pet's id, and task's index to be truly unique
+                                      child: Text(
+                                        task.name,
+                                        style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
                                     Text(
                                       "Time: ${format.format(task.dueDate)}",
                                       style: const TextStyle(
