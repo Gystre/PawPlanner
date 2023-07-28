@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pet.dart';
+import 'package:paw_planner/pet.dart';
 
 class AddPetForm extends StatefulWidget {
   final int nextIdx;

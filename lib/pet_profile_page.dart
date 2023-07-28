@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paw_planner/edit_pet_form.dart';
+import 'package:paw_planner/forms/edit_pet_form.dart';
 import 'pet.dart';
 
 class PetProfilePage extends StatelessWidget {

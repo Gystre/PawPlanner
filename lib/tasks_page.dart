@@ -17,7 +17,7 @@ class TasksPage extends StatelessWidget {
     required this.setTask,
   });
 
-  final format = DateFormat('h:mm a');
+  final format = DateFormat('MM/dd/yyyy, h:mm a');
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +120,7 @@ class TasksPage extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      "Time: ${format.format(task.dueDate)}",
+                                      "Due: ${format.format(task.dueDate)}",
                                       style: const TextStyle(
                                         fontSize: 12,
                                       ),

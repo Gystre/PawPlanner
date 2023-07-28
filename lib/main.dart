@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import "package:paw_planner/add_pet_form.dart";
-import "package:paw_planner/add_task_form.dart";
+import "package:paw_planner/forms/add_pet_form.dart";
+import "package:paw_planner/forms/add_task_form.dart";
 import "package:paw_planner/pet.dart";
 import "package:paw_planner/pets_page.dart";
 import "package:paw_planner/task.dart";

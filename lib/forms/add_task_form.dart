@@ -25,6 +25,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
   final List<int> _petIds = [];
 
   final _dateController = TextEditingController();
+  final _timeController = TextEditingController();
 
   void _submitForm() {
     if (_petIds.isEmpty) {
@@ -95,28 +96,69 @@ class _AddTaskFormState extends State<AddTaskForm> {
                 },
                 onChanged: (value) => _newTask.description = value,
               ),
-              TextFormField(
-                controller: _dateController,
-                decoration: const InputDecoration(labelText: "Due Date"),
-                readOnly: true,
-                onTap: () async {
-                  final date = await showDatePicker(
-                    context: context,
-                    initialDate: _newTask.dueDate,
-                    firstDate: DateTime.now(),
-                    lastDate: DateTime.now().add(const Duration(days: 365)),
-                  );
-                  if (date != null) {
-                    setState(() {
-                      _newTask.dueDate = date;
-                      _dateController.text = DateFormat.yMd().format(date);
-                    });
-                  }
-                },
-                validator: (value) {
-                  return null;
-                },
+
+              // due date and time picker
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _dateController,
+                      decoration: const InputDecoration(labelText: "Due Date"),
+                      readOnly: true,
+                      onTap: () async {
+                        final date = await showDatePicker(
+                          context: context,
+                          initialDate: _newTask.dueDate,
+                          firstDate: DateTime.now(),
+                          lastDate:
+                              DateTime.now().add(const Duration(days: 365)),
+                        );
+                        if (date != null) {
+                          setState(() {
+                            _newTask.dueDate = date;
+                            _dateController.text =
+                                DateFormat.yMd().format(date);
+
+                            // set the time picker text
+                            _timeController.text =
+                                DateFormat.jm().format(_newTask.dueDate);
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _timeController,
+                      decoration: const InputDecoration(labelText: "Due Time"),
+                      readOnly: true,
+                      onTap: () async {
+                        final time = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.fromDateTime(_newTask.dueDate),
+                        );
+
+                        if (time != null) {
+                          // set the time of the due date
+                          setState(() {
+                            _newTask.dueDate = DateTime(
+                              _newTask.dueDate.year,
+                              _newTask.dueDate.month,
+                              _newTask.dueDate.day,
+                              time.hour,
+                              time.minute,
+                            );
+                            _timeController.text =
+                                DateFormat.jm().format(_newTask.dueDate);
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
+              const SizedBox(height: 16),
               DropdownButtonFormField<TaskFrequency>(
                 decoration: const InputDecoration(labelText: "Frequency"),
                 value: _newTask.frequency,

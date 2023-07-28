@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:paw_planner/edit_task_form.dart';
+import 'package:intl/intl.dart';
+import 'package:paw_planner/forms/edit_task_form.dart';
 import 'package:paw_planner/pet.dart';
 import 'package:paw_planner/task.dart';
 
@@ -7,12 +8,14 @@ class TaskProfilePage extends StatelessWidget {
   final Pet pet;
   final Task task;
   final Function(int petIdx, Task task) setTask;
-  const TaskProfilePage({
+  TaskProfilePage({
     super.key,
     required this.task,
     required this.pet,
     required this.setTask,
   });
+
+  final format = DateFormat('MMMM dd, yyyy h:mm a');
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +72,7 @@ class TaskProfilePage extends StatelessWidget {
             const SizedBox(height: 8),
 
             // due date
-            TaskInfo(caption: "Due Date", text: task.dueDate.toString()),
+            TaskInfo(caption: "Due Date", text: format.format(task.dueDate)),
             const SizedBox(height: 8),
 
             // frequency

@@ -15,10 +15,11 @@ class _EditTaskFormState extends State<EditTaskForm> {
   late Task _newTask;
 
   // Create TextEditingController instances for each field
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _frequencyController = TextEditingController();
-  final TextEditingController _dueDateController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _frequencyController = TextEditingController();
+  final _dateController = TextEditingController();
+  final _timeController = TextEditingController();
 
   @override
   void initState() {
@@ -29,7 +30,8 @@ class _EditTaskFormState extends State<EditTaskForm> {
     _nameController.text = _newTask.name;
     _descriptionController.text = _newTask.description;
     _frequencyController.text = _newTask.frequency.toString();
-    _dueDateController.text = _newTask.dueDate.toString();
+    _dateController.text = DateFormat.yMd().format(_newTask.dueDate);
+    _timeController.text = DateFormat.jm().format(_newTask.dueDate);
   }
 
   void _submitForm() {
@@ -77,30 +79,67 @@ class _EditTaskFormState extends State<EditTaskForm> {
                 onChanged: (value) => _newTask.description = value,
               ),
 
-              // due date
-              TextFormField(
-                controller: _dueDateController,
-                decoration: const InputDecoration(labelText: "Due Date"),
-                readOnly: true,
-                onTap: () async {
-                  final date = await showDatePicker(
-                    context: context,
-                    initialDate: _newTask.dueDate,
-                    firstDate: DateTime.now(),
-                    lastDate: DateTime.now().add(const Duration(days: 365)),
-                  );
-                  if (date != null) {
-                    setState(() {
-                      _newTask.dueDate = date;
-                      _dueDateController.text = DateFormat.yMd().format(date);
-                    });
-                  }
-                },
-                validator: (value) {
-                  return null;
-                },
-              ),
+              // due date and time picker
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _dateController,
+                      decoration: const InputDecoration(labelText: "Due Date"),
+                      readOnly: true,
+                      onTap: () async {
+                        final date = await showDatePicker(
+                          context: context,
+                          initialDate: _newTask.dueDate,
+                          firstDate: DateTime.now(),
+                          lastDate:
+                              DateTime.now().add(const Duration(days: 365)),
+                        );
+                        if (date != null) {
+                          setState(() {
+                            _newTask.dueDate = date;
+                            _dateController.text =
+                                DateFormat.yMd().format(date);
 
+                            // set the time picker text
+                            _timeController.text =
+                                DateFormat.jm().format(_newTask.dueDate);
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _timeController,
+                      decoration: const InputDecoration(labelText: "Due Time"),
+                      readOnly: true,
+                      onTap: () async {
+                        final time = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.fromDateTime(_newTask.dueDate),
+                        );
+
+                        if (time != null) {
+                          // set the time of the due date
+                          setState(() {
+                            _newTask.dueDate = DateTime(
+                              _newTask.dueDate.year,
+                              _newTask.dueDate.month,
+                              _newTask.dueDate.day,
+                              time.hour,
+                              time.minute,
+                            );
+                            _timeController.text =
+                                DateFormat.jm().format(_newTask.dueDate);
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
               // frequency
               DropdownButtonFormField<TaskFrequency>(
                 decoration: const InputDecoration(labelText: "Frequency"),

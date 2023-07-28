@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pet.dart';
+import 'package:paw_planner/pet.dart';
 
 class EditPetForm extends StatefulWidget {
   final Pet pet;
