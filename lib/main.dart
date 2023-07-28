@@ -142,18 +142,19 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute<Task>(
+            MaterialPageRoute(
               builder: (context) => AddTaskForm(pets: _pets),
             ),
-          ).then((newTask) {
-            if (newTask == null) {
+          ).then((data) {
+            // type safety uhhhh wuts that
+            if (data == null) {
               return;
             }
 
             // iterate through all the pet ids and add the tasks to them
             setState(() {
-              for (int petId in newTask.petIds) {
-                _pets[petId].tasks.add(newTask);
+              for (int petId in data["petIds"]) {
+                _pets[petId].tasks.add(data["task"]);
               }
             });
           });

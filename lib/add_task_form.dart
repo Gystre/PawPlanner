@@ -15,6 +15,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
   final _formKey = GlobalKey<FormState>();
 
   final Task _newTask = Task(
+    petId: 0,
     name: '',
     description: '',
     dueDate: DateTime.now(),
@@ -36,8 +37,11 @@ class _AddTaskFormState extends State<AddTaskForm> {
     }
 
     if (_formKey.currentState!.validate()) {
-      _newTask.petIds = _petIds;
-      Navigator.pop(context, _newTask);
+      // pop the data as a map
+      Navigator.pop(context, {
+        'task': _newTask,
+        'petIds': _petIds,
+      });
     }
   }
 

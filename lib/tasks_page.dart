@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:paw_planner/pet.dart';
 import 'package:paw_planner/task.dart';
 import 'package:intl/intl.dart';
+import 'package:paw_planner/task_profile_page.dart';
 
 class TasksPage extends StatelessWidget {
   final List<Pet> pets;
@@ -57,63 +58,79 @@ class TasksPage extends StatelessWidget {
                     final j = entry.key;
                     final task = entry.value;
 
-                    return Dismissible(
-                      key: UniqueKey(),
-                      direction: DismissDirection.endToStart,
-                      onDismissed: (direction) => {
-                        deleteTask(i, j),
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("${task.name} deleted"),
-                            action: SnackBarAction(
-                              label: 'Undo',
-                              onPressed: () {
-                                addTask(i, task);
-                              },
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TaskProfilePage(task: task),
                             ),
-                          ),
-                        ),
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Colors.grey[200],
-                        ),
-                        child: Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          );
+                        },
+                        child: Dismissible(
+                          key: UniqueKey(),
+                          direction: DismissDirection.endToStart,
+                          onDismissed: (direction) => {
+                            deleteTask(i, j),
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("${task.name} deleted"),
+                                action: SnackBarAction(
+                                  label: 'Undo',
+                                  onPressed: () {
+                                    addTask(i, task);
+                                  },
+                                ),
+                              ),
+                            ),
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.grey[200],
+                            ),
+                            child: Row(
                               children: [
-                                Text(
-                                  task.name,
-                                  style: const TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // Hero(
+                                    //   tag: task.name + task.petId.toString(),
+                                    //   child: Text(
+                                    //     task.name,
+                                    //     style: const TextStyle(
+                                    //       fontSize: 24,
+                                    //       fontWeight: FontWeight.bold,
+                                    //       color: Colors.black,
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                    Text(
+                                      "Time: ${format.format(task.dueDate)}",
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Frequency: ${task.frequency.name}",
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                Text(
-                                  "Time: ${format.format(task.dueDate)}",
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                Text(
-                                  "Frequency: ${task.frequency.name}",
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                )
+
+                                // make the arrow appear on the right most side
+                                Expanded(child: Container()),
+                                const Icon(Icons.arrow_forward_ios),
                               ],
                             ),
-
-                            // make the arrow appear on the right most side
-                            Expanded(child: Container()),
-                            const Icon(Icons.arrow_forward_ios),
-                          ],
+                          ),
                         ),
                       ),
                     );

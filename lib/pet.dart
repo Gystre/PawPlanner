@@ -15,9 +15,19 @@ class Pet {
   // the tasks associated with this pet
   List<Task> tasks = [
     Task(
+      petId: 0,
       name: "Eat the dog",
       frequency: TaskFrequency.daily,
-      description: "Consume while fresh",
+      description:
+          "Enim nostrum atque itaque. Enim nostrum fugit nobis culpa quod error ut quidem. Ut saepe mollitia accusantium error quis nihil cupiditate tenetur. Accusantium voluptas ea iste. Quisquam enim placeat repellat vel.",
+      dueDate: DateTime.now(),
+    ),
+    Task(
+      petId: 0,
+      name: "Find the dog",
+      frequency: TaskFrequency.daily,
+      description:
+          "Enim nostrum atque itaque. Enim nostrum fugit nobis culpa quod error ut quidem. Ut saepe mollitia accusantium error quis nihil cupiditate tenetur. Accusantium voluptas ea iste. Quisquam enim placeat repellat vel.",
       dueDate: DateTime.now(),
     )
   ];

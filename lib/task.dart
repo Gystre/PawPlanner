@@ -20,8 +20,9 @@ extension TaskFrequencyExtension on TaskFrequency {
 }
 
 class Task {
-  // multiple tasks can be set to multiple pets
-  List<int> petIds = [];
+  // tasks need to be able to know where in the list of tasks in the pet they're associated with
+  // in order to be able update and delete the correct ones
+  int petId;
 
   String name;
   String description;
@@ -29,6 +30,7 @@ class Task {
   TaskFrequency frequency;
 
   Task({
+    required this.petId,
     required this.name,
     required this.description,
     required this.dueDate,
