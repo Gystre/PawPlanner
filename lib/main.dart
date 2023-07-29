@@ -47,14 +47,6 @@ class _MyHomePageState extends State<MyHomePage> {
       age: 999,
       weight: 999,
     ),
-    Pet(
-      idx: 1,
-      name: "ez",
-      species: "cat",
-      breed: "bruhmobile123",
-      age: 2,
-      weight: 2.0,
-    )
   ];
 
   void _onItemTapped(int index) {

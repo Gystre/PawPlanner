@@ -73,8 +73,11 @@ class PetsPage extends StatelessWidget {
                         tag: pet.name,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
-                          child: Image.asset("assets/eve.png",
-                              width: 96, height: 96),
+                          child: Image.asset(
+                            "assets/eve.png",
+                            width: 96,
+                            height: 96,
+                          ),
                         ),
                       ),
 
@@ -90,14 +93,13 @@ class PetsPage extends StatelessWidget {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Theme.of(context).primaryColor,
-                                  fontSize: 24,
+                                  fontSize: 32,
                                 ),
                               ),
                               Text(
                                 pet.breed,
                                 style: const TextStyle(
                                   fontSize: 12,
-                                  color: Colors.grey,
                                 ),
                               ),
                             ],

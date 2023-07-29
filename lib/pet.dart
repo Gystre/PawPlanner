@@ -16,7 +16,7 @@ class Pet {
   List<Task> tasks = [
     Task(
       idx: 0,
-      name: "Eat the dog",
+      name: "Find the dog",
       frequency: TaskFrequency.daily,
       description:
           "Enim nostrum atque itaque. Enim nostrum fugit nobis culpa quod error ut quidem. Ut saepe mollitia accusantium error quis nihil cupiditate tenetur. Accusantium voluptas ea iste. Quisquam enim placeat repellat vel.",
@@ -24,7 +24,7 @@ class Pet {
     ),
     Task(
       idx: 1,
-      name: "Find the dog",
+      name: "It's probably out there",
       frequency: TaskFrequency.daily,
       description:
           "Enim nostrum atque itaque. Enim nostrum fugit nobis culpa quod error ut quidem. Ut saepe mollitia accusantium error quis nihil cupiditate tenetur. Accusantium voluptas ea iste. Quisquam enim placeat repellat vel.",
